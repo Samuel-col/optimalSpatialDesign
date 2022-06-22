@@ -6,7 +6,7 @@ De acuerdo con Bohórquez (2022), un diseño óptimo $S_n^{\*}$ se define como
 
 $$S_{n}^{\*}=\arg \max_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)$$
 
-donde $\Phi(\boldsymbol{\Theta}, S_{n})$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$. Así, si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de predicción. En particular, la varianza del error de la predicción en $m$ puntos de interés no muestrados $S_{0}=\{\boldsymbol{s}_{0}^{1}, \ldots, \boldsymbol{s}_{0}^{B}\}$
+donde $\Phi(\boldsymbol{\Theta}, S_{n})$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$.
 
 
 
