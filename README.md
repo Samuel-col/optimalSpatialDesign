@@ -1,5 +1,7 @@
 # Diseño de Muestreo Óptimo
 
+This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+
 Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza del error de predicción a través de kriging simple, ordinario o universal.
 
 De acuerdo con Un diseño óptimo $S_{n}^{*}$ se 
