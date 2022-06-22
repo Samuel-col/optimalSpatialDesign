@@ -2,12 +2,11 @@
 
 Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza del error de predicción a través de kriging simple, ordinario o universal.
 
-De acuerdo con Bohórquez (2022), un diseño óptimo $S_n^{*}$ se define como
+De acuerdo con Bohórquez (2022), un diseño óptimo $$S_{n}^{*}$$ se define como
 
 $$S_{n}^{*}=\arg \max_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)$$
 
-
-donde $\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$. Así, si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de la predicción. En particular, la varianza del error de las predicciones en $m$ lugares no observados $S_{0}=\left\{\boldsymbol{s}_{0}^{1}, \ldots, \boldsymbol{s}_{0}^{B}\right\}$ puede ser minimizada. 
+donde $$\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $$S_{n}$$ y que depende del vector de parámetros $$\Theta$$. Así, si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de la predicción. En particular, la varianza del error de las predicciones en $$m$$ lugares no observados $$S_{0}=\left\{\boldsymbol{s}_{0}^{1}, \ldots, \boldsymbol{s}_{0}^{m}\right\}$$ puede ser minimizada. 
 
 ---
 
