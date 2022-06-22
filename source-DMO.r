@@ -110,19 +110,13 @@ optimal_design <- function(k, s0, model, krigingType = "simple",
   if(plt){
     library(ggplot2)
     library(sf)
-    #colnames(grilla) <- c("x","y")
     s0 <- as.data.frame(s0)
     ggplot() + 
-      #geom_point(data = grilla,aes(x=x,y=y),colour = "gray90") +
-      geom_point(aes(x=grilla[,1],y=grilla[,2]),colour = "gray90") +
+      geom_point(aes(x=grilla[,1],y=grilla[,2]),colour = "gray90") + # Agregar grilla
       geom_sf(data = st_as_sf(mapa),fill= "#ffffff00",
                       colour = "gray40") + # Agregar mapa
-      #geom_point(data=as.data.frame(s0,col.names=c("x","y")),
-      #           aes(x=x,y=y,col="P. Interes")) +
       geom_point(aes(x = s0[,1],y=s0[,2],
                      col = "P. Interés")) +  # Agregar puntos a predecir
-      #geom_point(data=as.data.frame(nuevas_estaciones,col.names=c("x","y")),
-      #           aes(x=x1,y=y1,col="Estaciones")) +
       geom_point(aes(x=nuevas_estaciones[,1],y = nuevas_estaciones[,2],
                      col = "Estaciones")) +  # Agregar estaciones
       theme_light() +
@@ -133,16 +127,6 @@ optimal_design <- function(k, s0, model, krigingType = "simple",
       theme(legend.title = element_blank()) -> fit.plot
     
   }
-  
-  # Imprimimr reporte
-  # library(crayon)
-  # if(result$convergence==0){
-  #   cat("\nSe utilizaron",blue(result$counts[1]),"iteraciones\n")
-  #   cat("Varianza minimizada:",green(result$value),"\n")
-  # }else{
-  #   cat("\n",red("El proceso no convergió. Revise el modelo de semivariograma."),"\n")
-  #   cat(yellow(result$message),"\n")
-  # }
   
   if(plt){
     return(list(coords = nuevas_estaciones,plot = fit.plot))
