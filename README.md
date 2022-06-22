@@ -16,10 +16,14 @@ nombre_de_la_funcion(arg1,arg2,...)
 
 ```
 
-| Plugin | README |
+| Argumento | Descripción |
 | ------ | ------ |
 |   `k`     |   Número de estaciones a ubicar   |
 | `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
+| `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
+| `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" or "universal".  |
+| `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
+| `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas. |
 ---
 
 ## Dependencias
