@@ -2,7 +2,7 @@
 
 Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza del error de predicción a través de kriging simple, ordinario o universal.
 
-De acuerdo con Un diseño óptimo $S_{n}^{*}$ es definido en [48] como aquel que
+De acuerdo con Un diseño óptimo $S_{n}^{*}$ se 
 $$
 S_{n}^{*}=\arg \operatorname{má}_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)
 $$
