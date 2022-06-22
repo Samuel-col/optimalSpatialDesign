@@ -1,14 +1,12 @@
 # Diseño de Muestreo Óptimo
 
-This sentence uses `$` delimiters to show math inline:  $S_n^{\*}$
-
 Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza del error de predicción a través de kriging simple, ordinario o universal.
 
-De acuerdo con Un diseño óptimo $S_{n}^{*}$ se 
-$
-S_{n}^{*}=\arg \operatorname{má}_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)
-$
-donde $\Phi(\boldsymbol{\Theta}, S_{n})$ es el criterio de diseño y puede ser cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$. El criterio de diseño en el contexto de muestreo espacial depende
+De acuerdo con Bohórquez (2022), un diseño óptimo $S_n^{\*}$ se define como
+
+$$S_{n}^{\*}=\arg \max_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)$$
+
+donde $\Phi(\boldsymbol{\Theta}, S_{n})$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$. 
 
 Si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de predicción. En particular, la varianza del error de predicción asociada al kriging puede ser minimizada.
 
@@ -50,6 +48,10 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 ## Ejemplo
 
 
+---
+## Referencias
+
+Bohorquez, M. (2022). Estadística Espacial Espacio-Temporal para Campos Aleatorios Escalares y Funcionales [Notas de Clase].
 ---
 
 Creado por: 
