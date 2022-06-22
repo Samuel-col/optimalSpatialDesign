@@ -1,6 +1,14 @@
 # Diseño de Muestreo Óptimo
 
-Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza de la predicción a través de kriging simple, ordinario o universal.
+Esta función recibe un modelo de varigrama, un mapa (archivo `.shp`) y un conjunto de puntos en los que se quieren hacer predicciones y retorna los lugares en los que se deben tomar los registros para minimizar la varianza del error de predicción a través de kriging simple, ordinario o universal.
+
+De acuerdo con Un diseño óptimo $S_{n}^{*}$ es definido en [48] como aquel que
+$$
+S_{n}^{*}=\arg \operatorname{má}_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\right)
+$$
+donde $\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$ es el criterio de diseño y puede ser cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros $\Theta$. El criterio de diseño en el contexto de muestreo espacial depende
+
+Si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de predicción. En particular, la varianza del error de predicción asociada al kriging puede ser minimizada.
 
 ---
 
