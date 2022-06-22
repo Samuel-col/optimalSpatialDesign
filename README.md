@@ -16,6 +16,10 @@ nombre_de_la_funcion(arg1,arg2,...)
 
 ```
 
+| Plugin | README |
+| ------ | ------ |
+|   `k`     |   Número de estaciones a ubicar   |
+| `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
 ---
 
 ## Dependencias
