@@ -8,22 +8,15 @@ $$S_{n}^{*}=\arg \max_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\r
 
 donde $\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros. Así, si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de la predicción. En particular, la varianza del error de las predicciones en $m$ lugares no observados $S_{0}=\{s_{0}^{1}, ..., s_{0}^{m}\}$ puede ser minimizada. 
 
+*aquí mencionamos la varianza de la predicción según el tipo de kriging 
+*también hablamos del método de optimización
 ---
 
 ```r
 
-nombre_de_la_funcion(arg1,arg2,...)
+optimal_design <- function(k, s0, model, krigingType = "simple", form = NULL, map, CRS, plt = T)
 
 ```
-
-| Argumento | Descripción |
-| ------ | ------ |
-|   `k`     |   Número de estaciones a ubicar   |
-| `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
-| `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
-| `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" or "universal".  |
-| `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
-| `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas. |
 ---
 
 ## Dependencias
@@ -41,7 +34,15 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 
 ## Argumentos
 
-*Aquí explicamos en qué consiste cada argumento como si fuera la documentación de R*
+| Argumento | Descripción |
+| ------ | ------ |
+|   `k`     |   Número de estaciones a ubicar   |
+| `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
+| `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
+| `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" or "universal".  |
+| `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
+| `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas. |
+| `CRS`  |  Elipsoide de referencia para la conversión de las coordenadas. Objeto crs. |
 
 ---
 
