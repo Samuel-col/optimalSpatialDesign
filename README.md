@@ -39,10 +39,11 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 |   `k`     |   Número de estaciones a ubicar   |
 | `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
 | `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
-| `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" or "universal".  |
+| `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" o "universal".  |
 | `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
-| `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas. |
-| `CRS`  |  Elipsoide de referencia para la conversión de las coordenadas. Objeto crs. |
+| `grid` | Grilla de puntos en los cuales se pueden ubicar estaciones. |
+| `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas si no se pasa ningún objeto en el argumento `grid`. |
+| `plt` | Booleano que determina se se debe generar un gráfico con el resultado obtenido o no. |
 
 ---
 
