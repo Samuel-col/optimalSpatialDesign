@@ -28,11 +28,30 @@ modelo_svg <- vgm(psill = 5.665312,
 
 my.CRS <- sp::CRS("+init=epsg:21899") # https://epsg.io/21899
 
-target <- sp::spsample(mapa,n = 10, type = "random")
-target <- spTransform(target,my.CRS)
+mapa <- spTransform(mapa,my.CRS)
+target <- sp::spsample(mapa,n = 100, type = "random")
+#target <- spTransform(target,my.CRS)
 #target <- sp::spsample(spTransform(mapa,CRS.output),n = 10, type = "random")
 
-optimal_design(k = 3, s0 = target,model = modelo_svg,
-               krigingType = "simple",map = mapa, CRS = my.CRS) -> res
+optimal_design(k = 10, s0 = target,model = modelo_svg,
+               krigingType = "simple",map = mapa) -> res1
 
-res
+res1
+
+
+mi.grilla <- sp::spsample(mapa,n=1e4,type = "regular")
+mi.grilla <- mi.grilla[2e3:7e3]                          
+
+
+optimal_design(k=10,s0 = target,model = modelo_svg,
+               krigingType = "ordinary",
+               grid = as.data.frame(mi.grilla)) -> res2
+
+res2
+
+
+optimal_design(k = 10, s0 = target, model = modelo_svg,
+               krigingType = "universal", form = "x + I(x^2) + y",
+               grid = as.data.frame(mi.grilla)) -> res3
+
+res3
