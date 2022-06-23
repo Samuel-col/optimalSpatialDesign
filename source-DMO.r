@@ -82,8 +82,8 @@ optimal_design <- function(k, s0, model, krigingType = "simple",
     }else{
       rango <- max(modelo_svg$range)
       grid <- as.data.frame(sp::spsample(mapa,n = 3e3,
-                                         type = "regular",
-                                         cellsize = rango/3))
+                                         type = "regular"))#,
+                                         #cellsize = rango/3))
     }
   }
 
