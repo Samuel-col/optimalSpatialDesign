@@ -22,13 +22,11 @@ optimal_design <- function(k, s0, model, krigingType = "simple", form = NULL, ma
 ## Dependencias
 
 * [`gstat`](https://github.com/r-spatial/gstat)
-* [`spsann`](https://github.com/Laboratorio-de-Pedometria/spsann-package)
 * [`ggplot2`](https://github.com/tidyverse/ggplot2)
 * [`sf`](https://github.com/r-spatial/sf)
-* [`rgdal`](https://github.com/cran/rgdal)
 * [`sp`](https://github.com/edzer/sp)
 
-Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html#available-packages-D) excepto `spsann` el cual debe ser descargado a partir de github.
+Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html#available-packages-D).
 
 ---
 
