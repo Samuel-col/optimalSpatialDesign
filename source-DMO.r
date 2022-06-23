@@ -65,22 +65,9 @@ criterio <- function(points, s0, model, krigingType = "simple",
 #-------------- Función DMO -------------------------#
 
 # * Incluir modelos externos a vgm
-# * Recibir shape o recibir grilla de candidatos
 # * En las grillas regularmente espaciadas la distancia mínima en estaciones por defecto es 1/3 del rango, pero el usuario lo puede cambiar.
 # * Escribir documentación sobre todo lo anterior.
 
-# Argumentos
-# * k: Número de estaciones
-# * s0: objeto de tipo matrix o data.frame con las coordenadas
-#       de los puntos en los que se desea hacer predicciones
-# * model: objeto de tipo vgm
-# * krigingType: string que puede ser "simple", "ordinary" o "universal"
-#               según el tipo de kriging a utilizar. Note que el kriging 
-#               universal requiere de una fórmula
-# * form: formula de la media para el kriging universal
-# * map: Objeto de tipo SpatialPolygonsDataFrame que representa el 
-#       área geográfica dentro de la cuál pueden estra las estaciones.
-# * grid: grilla de puntos en los que pueden ser ubicadas las estaciones.
 optimal_design <- function(k, s0, model, krigingType = "simple",
                            form=NULL,grid=NULL,map=NULL,plt = T){
   
@@ -93,7 +80,10 @@ optimal_design <- function(k, s0, model, krigingType = "simple",
     if(is.null(map)){
       stop("No se ha suministrado una grilla ni un mapa de posibles coordenadas para las estaciones.")
     }else{
-      grid <- as.data.frame(sp::spsample(mapa,n = 3e3, type = "regular"))
+      rango <- max(modelo_svg$range)
+      grid <- as.data.frame(sp::spsample(mapa,n = 3e3,
+                                         type = "regular",
+                                         cellsize = rango/3))
     }
   }
 

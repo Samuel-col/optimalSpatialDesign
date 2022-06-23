@@ -30,8 +30,6 @@ my.CRS <- sp::CRS("+init=epsg:21899") # https://epsg.io/21899
 
 mapa <- spTransform(mapa,my.CRS)
 target <- sp::spsample(mapa,n = 100, type = "random")
-#target <- spTransform(target,my.CRS)
-#target <- sp::spsample(spTransform(mapa,CRS.output),n = 10, type = "random")
 
 optimal_design(k = 10, s0 = target,model = modelo_svg,
                krigingType = "simple",map = mapa) -> res1
