@@ -39,7 +39,7 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 | `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
 | `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" o "universal".  |
 | `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
-| `grid` | Grilla de puntos en los cuales se pueden ubicar estaciones. |
+| `grid` | Objeto de tipo matrix o data.frame. Grilla de puntos en los cuales se pueden ubicar estaciones. |
 | `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas si no se pasa ningún objeto en el argumento `grid`. |
 | `plt` | Booleano que determina se se debe generar un gráfico con el resultado obtenido o no. |
 
@@ -53,6 +53,77 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 
 ## Ejemplo
 
+Cargamos la librerías necesarias y el script con la función `optimal_design`.
+
+```r
+
+library(gstat)
+library(rgdal)
+library(ggplot2)
+library(sf)
+library(sp)
+
+source("source-DMO.r")
+
+```
+
+Ahora, cargamos el mapa y creamos el modelo de semivariograma con los cuales trabajaremos.
+
+```r
+
+mapa <- rgdal::readOGR(dsn = "Boyacá.shp")
+
+modelo_svg <- vgm(psill = 5.665312,
+                  model = "Exc",
+                  range = 88033.33,
+                  kappa = 1.62,
+                  add.to = vgm(psill = 0.893,
+                               model = "Nug",
+                               range = 0,
+                               kappa = 0))
+
+my.CRS <- sp::CRS("+init=epsg:21899") # https://epsg.io/21899
+
+mapa <- spTransform(mapa,my.CRS)
+
+```
+
+Ya podemos crear un conjunto de puntos en el mapa en los cuales queremos predecir de manera óptima y llamar a la función `optimal_design`.
+
+```r
+
+target <- sp::spsample(mapa,n = 100, type = "random")
+
+optimal_design(k = 10, s0 = target,model = modelo_svg,
+               krigingType = "simple",map = mapa) -> res1
+
+res1
+
+```
+
+A continuación se muestran otros ejemplos para kriging ordinario y kriging universal suministrando una grilla específica de puntos en los que se pueden unbicar las estaciones
+
+```r
+
+mi.grilla <- sp::spsample(mapa,n=1e4,type = "regular")
+mi.grilla <- mi.grilla[2e3:7e3]                          
+
+
+optimal_design(k=10,s0 = target,model = modelo_svg,
+               krigingType = "ordinary",
+               grid = as.data.frame(mi.grilla)) -> res2
+
+res2
+
+
+optimal_design(k = 10, s0 = target, model = modelo_svg,
+               krigingType = "universal", form = "x + I(x^2) + y",
+               grid = as.data.frame(mi.grilla)) -> res3
+
+res3
+
+
+```
 
 ---
 ## Referencias
