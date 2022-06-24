@@ -136,7 +136,9 @@ res3
 ---
 ## Referencias
 
-* Bohorquez, M. (2022). Estadística Espacial Espacio-Temporal para Campos Aleatorios Escalares y Funcionales [Notas de Clase].
+* Bohorquez, M. (2022). *Estadística Espacial Espacio-Temporal para Campos Aleatorios Escalares y Funcionales*. [Notas de Clase].
+* Cressie, N. (1993). *Statistics for Spatial Data*. John Wiley & Sons. Inc.
+
 ---
 
 Creado por: 
