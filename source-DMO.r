@@ -80,7 +80,7 @@ optimal_design <- function(k, s0, model, krigingType = "simple",
     if(is.null(map)){
       stop("No se ha suministrado una grilla ni un mapa de posibles coordenadas para las estaciones.")
     }else{
-      rango <- max(modelo_svg$range)
+      # rango <- max(modelo_svg$range)
       grid <- as.data.frame(sp::spsample(mapa,n = 3e3,
                                          type = "regular"))#,
                                          #cellsize = rango/3))

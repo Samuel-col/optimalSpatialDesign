@@ -36,6 +36,10 @@ optimal_design(k = 10, s0 = target,model = modelo_svg,
 
 res1
 
+# png("ej1.png",height = 650, width = 700)
+# res1$plot
+# dev.off()
+
 
 mi.grilla <- sp::spsample(mapa,n=1e4,type = "regular")
 mi.grilla <- mi.grilla[2e3:7e3]                          
