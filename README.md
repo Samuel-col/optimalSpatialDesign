@@ -101,7 +101,11 @@ res1
 
 ```
 
-A continuación se muestran otros ejemplos para kriging ordinario y kriging universal suministrando una grilla específica de puntos en los que se pueden unbicar las estaciones
+El resultado es el siguiente. Los puntos grises representan la grilla de puntos en los que se podían ubicar las estaciones.
+
+![ejemplo 1](images/ej1.png)
+
+A continuación se muestran otros ejemplos para kriging ordinario y kriging universal suministrando una grilla específica de puntos en los que se pueden ubicar las estaciones
 
 ```r
 
@@ -124,6 +128,10 @@ res3
 
 
 ```
+
+![ejemplo 2](images/ej2.png)
+
+![ejemplo 3](images/ej3.png)
 
 ---
 ## Referencias
