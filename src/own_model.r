@@ -76,14 +76,14 @@ own_model.fn <- function(cov_model,
   
   # Simple
   if(krigingType == "simple"){
-    print(noquote("[usando kriging simple]"))
+    #print(noquote("[usando kriging simple]"))
     
     lambda <- solve(Sigma)%*%cov0
   }
   
   # Ordinario
   if(krigingType == "ordinary"){
-    print(noquote("[usando kriging ordinario]"))
+    #print(noquote("[usando kriging ordinario]"))
     
     aux    <- ones_k%*%((1 + (-1)*(t(ones_k)%*%solve(Sigma)%*%cov0))/as.numeric((t(ones_k)%*%solve(Sigma)%*%ones_k)))
     lambda <- solve(Sigma) %*% (cov0 + aux)  # De dimension k x 1
@@ -91,14 +91,13 @@ own_model.fn <- function(cov_model,
   
   # Universal
   if(krigingType == "universal"){
-    print(noquote("[usando kriging universal]"))
+    #print(noquote("[usando kriging universal]"))
     
     krig_formula <- as.formula(paste("z ~ ",krig_formula))
     
     # Para las estaciones
     mean_model_points <- lm(formula = krig_formula, data = as.data.frame(datos))
     X_mat <- as.matrix(model.matrix(mean_model_points))
-    print(X_mat)
     
     # Para los target
     datos_s0 = as.data.frame(s0); datos_s0$z = 1:N

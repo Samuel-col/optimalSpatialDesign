@@ -40,22 +40,20 @@ optimal_design <- function(k, s0, vgm_model = NULL,cov_model = NULL,
         vgm_model = vgm_model,method = "L-BFGS-B",grid=grid,
         krig_formula = krig_formula,krigingType = krigingType,
         control = list(trace = 1L,factr = 1e-6,
-                       REPORT = 4L)) -> result
+                       REPORT = 4L),maxit = 85) -> result
   }else{
     
     if(is.null(range) | is.null(psill)){
       stop("Se deben suministrar el rango (range) y la silla (psill).")
     }
     # Llamar a own_model
-    invisible(capture.output(
     stats::optim(par = c(estaciones0),fn = own_model.fn, s0 = s0,
                  krigingType = krigingType,krig_formula = krig_formula,
                  range = range, psill = psill,cov_model = cov_model,
                  nugget = nugget,...,#grid = grid,
                  control = list(trace = 1L,factr = 1e-6,
-                                 REPORT = 4L)) -> result
-    ))
-    
+                                 REPORT = 4L,maxit = 85),
+                 method = "L-BFGS-B") -> result
     
   }
   
