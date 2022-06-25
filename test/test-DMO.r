@@ -13,9 +13,9 @@ library(sf)
 library(sp)
 #library(crayon)
 
-source("source-DMO.r")
+source("../src/source-DMO.r")
 
-mapa <- rgdal::readOGR(dsn = "Boyacá.shp")
+mapa <- rgdal::readOGR(dsn = "../data/Boyacá.shp")
 
 modelo_svg <- vgm(psill = 5.665312,
                   model = "Exc",
