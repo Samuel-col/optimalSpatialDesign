@@ -10,7 +10,6 @@ library(rgdal)
 library(ggplot2)
 library(sf)
 library(sp)
-#library(crayon)
 
 source("../src/optimal_design.r")
 source("../src/gstat_model.r")
@@ -29,17 +28,16 @@ modelo_svg <- vgm(psill = 5.665312,
 
 my.CRS <- sp::CRS("+init=epsg:21899") # https://epsg.io/21899
 
-mapa <- spTransform(mapa,my.CRS)
-target <- sp::spsample(mapa,n = 100, type = "random")
 
+mapa <- spTransform(mapa,my.CRS)
+target <- sp::spsample(mapa,n = 100, type = "random") # Puntos sobre los que queremos realizar una predicción de varianza mínima.
+
+
+##
 optimal_design(k = 10, s0 = target,vgm_model = modelo_svg,
                krigingType = "simple",map = mapa) -> res1
 
 res1
-
-# png("ej1.png",height = 650, width = 700)
-# res1$plot
-# dev.off()
 
 
 mi.grilla <- sp::spsample(mapa,n=1e4,type = "regular")
@@ -59,6 +57,7 @@ optimal_design(k = 10, s0 = target, vgm_model = modelo_svg,
                grid = as.data.frame(mi.grilla)) -> res3
 
 res3
+
 
 # Ahora vamos a suministrar un modelo de covarianza propio.
 
@@ -108,3 +107,17 @@ optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
                nugget = my_nugget,krig_formula = "x + sqrt(y)") -> res7
 
 res7
+
+
+# Exportar gráficos
+for(i in 1:7){
+  print(i)
+  new_file <- paste("ej",i,".png",sep="")
+  new_path <- paste(getwd(),new_file,sep="/")
+  png(filename = new_path,height = 850, width = 1000)
+  cat("Se abrió el archivo",new_path,"\n")
+  res_object_name <- paste("res",i,sep="")
+  res_object <- get(res_object_name)
+  plot(res_object$plot)
+  dev.off()
+}
