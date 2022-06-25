@@ -78,7 +78,7 @@ my_psill = 5
 my_nugget = 1
 
 
-optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
+optimal_design(k = 20, s0 = as.data.frame(target), cov_model = my_cov_model,
                krigingType = "simple",map = mapa,
                range = my_range, psill = my_psill,
                nugget = my_nugget) -> res4
@@ -94,8 +94,8 @@ optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
 res5
 
 
-optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
-               krigingType = "ordinary",map = mapa,
+optimal_design(k = 20, s0 = as.data.frame(target), cov_model = my_cov_model,
+               krigingType = "universal",map = mapa,
                range = my_range, psill = my_psill,
                nugget = my_nugget,krig_formula = "x + y") -> res6
 
@@ -103,7 +103,7 @@ res6
 
 
 optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
-               krigingType = "ordinary",map = mapa,
+               krigingType = "universal",map = mapa,
                range = my_range, psill = my_psill,
                nugget = my_nugget,krig_formula = "x + sqrt(y)") -> res7
 
