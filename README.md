@@ -39,15 +39,30 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 | Argumento | Descripción |
 | ------ | ------ |
 |   `k`     |   Número de estaciones a ubicar   |
-| `S0` | Objeto de tipo matrix o data.frame que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
-| `model` | Objeto de tipo `vgm`. Modelo de semivarianza. |
+| `S0` | Objeto de tipo `matrix` o `data.frame` que contenga las coordenadas de las ubicaciones de interés (donde se desean hacer predicciones) |
+| `vgm_model` | Objetode tipo `variogramModel` del paquete gstat que representa el modelo de semivarianza. |
+| `cov_model` | Función que define un modelo de covarianza especificado por el usuario. Esta será utilizada si no se suministra el argumento `vgm_model`. Si se pasa este argumento, también se deben pasar los argumentos `range` y `psill`. Además, todos los argumentos adicionales que se pasen a la función `optimal_design` serán pasados a la función `cov_model`. Esto es útil cuando se tienen parámetros adicionales como `kappa` en el modelo Matern. |
 | `krigingType`  | Tipo de kriging a utilizar, e.g. "simple", "ordinary" o "universal".  |
-| `form` | (Opcional) Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y".|
+| `range` | Rango del modelo `cov_model`. |
+| `psill` | Silla del modelo `cov_model`. |
+| `nugget` | Pepita del modelo `cov_model`. Por defecto es cero. |
+| `krig_formula` | Fórmula que define la variable dependiente como un modelo lineal de variables independientes, e.g. "x+y". Sólo se utiliza en el kriging universal. Es un objeto de tipo string que sólo contiene la parte independiente de la fórmula, es decir, en vez de "z ~ x + y" se debe suministrar "x + y". |
 | `grid` | Objeto de tipo matrix o data.frame. Grilla de puntos en los cuales se pueden ubicar estaciones. |
 | `map` | Objeto de tipo SpatialPolygonsDataFrame que limita el área geográfica donde las estaciones quieren ser ubicadas si no se pasa ningún objeto en el argumento `grid`. |
 | `plt` | Booleano que determina se se debe generar un gráfico con el resultado obtenido o no. |
+| `...` | Argumentos adicionales que se pasarán a la función `cov_model`. |
 
 ---
+
+## Valor
+
+Una lista con los siguientes objetos
+
+| Objeto | Descripción |
+| ------ | ------ |
+| `coords` | Objeto de tipo `matrix` y `array` que contiene las coordenadas óptimas para las estaciones. |
+| `plot` | Gráfico del paquete `ggplot2` que presenta el resultado. En él, los puntos grises representan la grilla de puntos en la que se podían situar las estaciones. |
+
 
 ## Detalles
 
@@ -57,7 +72,7 @@ Todos estos paquetes están disponibles en [CRAN](https://cran.r-project.org/web
 
 ## Ejemplo
 
-Cargamos la librerías necesarias y el script con la función `optimal_design`.
+Cargamos la librerías y scripts necesarios.
 
 ```r
 
@@ -67,7 +82,9 @@ library(ggplot2)
 library(sf)
 library(sp)
 
-source("source-DMO.r")
+source("../src/optimal_design.r")
+source("../src/gstat_model.r")
+source("../src/own_model.r")
 
 ```
 
@@ -75,7 +92,7 @@ Ahora, cargamos el mapa y creamos el modelo de semivariograma con los cuales tra
 
 ```r
 
-mapa <- rgdal::readOGR(dsn = "Boyacá.shp")
+mapa <- rgdal::readOGR(dsn = "../data/Boyacá.shp")
 
 modelo_svg <- vgm(psill = 5.665312,
                   model = "Exc",
@@ -88,6 +105,7 @@ modelo_svg <- vgm(psill = 5.665312,
 
 my.CRS <- sp::CRS("+init=epsg:21899") # https://epsg.io/21899
 
+
 mapa <- spTransform(mapa,my.CRS)
 
 ```
@@ -96,20 +114,38 @@ Ya podemos crear un conjunto de puntos en el mapa en los cuales queremos predeci
 
 ```r
 
-target <- sp::spsample(mapa,n = 100, type = "random")
+target <- sp::spsample(mapa,n = 100, type = "random") # Puntos sobre los que queremos realizar una predicción de varianza mínima.
 
-optimal_design(k = 10, s0 = target,model = modelo_svg,
+optimal_design(k = 10, s0 = target,vgm_model = modelo_svg,
                krigingType = "simple",map = mapa) -> res1
 
 res1
 
 ```
 
-El resultado es el siguiente. Los puntos grises representan la grilla de puntos en los que se podían ubicar las estaciones.
+Las coordenadas óptimas son
+
+```r
+
+##      x1       x2
+## [1,] 516425.7 1121174
+## [2,] 455101.3 1082149
+## [3,] 404926.9 1132324
+## [4,] 502488.3 1188073
+## [5,] 544300.3 1246610
+## [6,] 466251.2 1135111
+## [7,] 424439.2 1034762
+## [8,] 285065.7 1146261
+## [9,] 338027.7 1115599
+## [10,] 402139.4 1082149
+
+```
+
+El gráfico se muestra a continuación. Los puntos grises representan la grilla de puntos en los que se podían ubicar las estaciones.
 
 ![ejemplo 1](images/ej1.png)
 
-A continuación se muestran otros ejemplos para kriging ordinario y kriging universal suministrando una grilla específica de puntos en los que se pueden ubicar las estaciones
+A continuación se muestran otros ejemplos para kriging ordinario y kriging universal suministrando una grilla específica de puntos en los que se pueden ubicar las estaciones y un modelo de semivarianza del paquete `gstat`.
 
 ```r
 
@@ -136,6 +172,75 @@ res3
 ![ejemplo 2](images/ej2.png)
 
 ![ejemplo 3](images/ej3.png)
+
+Ahora presentaremos cuatro ejemplos suministrando un modelo de covarianza definido manualmentes y los distintos tipos de kriging.
+
+```r
+
+my_cov_model <- function(h, range, psill, nugget = 0){
+  ifelse(h == 0,
+         nugget + psill,
+         ifelse(h > 0,
+                psill*(exp((-1)*h/range)),
+                "Las distancias deben ser positivas"
+         )
+  )
+}
+
+# Parámetros
+my_range = 20000
+my_psill = 5
+my_nugget = 1
+
+
+```
+
+Se llama  a la función  `optimal_design` cuatro veces
+
+```r
+optimal_design(k = 20, s0 = as.data.frame(target), cov_model = my_cov_model,
+               krigingType = "simple",map = mapa,
+               range = my_range, psill = my_psill,
+               nugget = my_nugget) -> res4
+
+res4
+
+
+optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
+               krigingType = "ordinary",map = mapa,
+               range = my_range, psill = my_psill,
+               nugget = my_nugget) -> res5
+
+res5
+
+
+optimal_design(k = 20, s0 = as.data.frame(target), cov_model = my_cov_model,
+               krigingType = "universal",map = mapa,
+               range = my_range, psill = my_psill,
+               nugget = my_nugget,krig_formula = "x + y") -> res6
+
+res6
+
+
+optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
+               krigingType = "universal",map = mapa,
+               range = my_range, psill = my_psill,
+               nugget = my_nugget,krig_formula = "x + sqrt(y)") -> res7
+
+res7
+
+
+```
+
+Y se obtienen los respectivos resultados:
+
+![ejemplo 4](images/ej4.png)
+
+![ejemplo 5](images/ej5.png)
+
+![ejemplo 6](images/ej6.png)
+
+![ejemplo 7](images/ej7.png)
 
 ---
 ## Referencias
