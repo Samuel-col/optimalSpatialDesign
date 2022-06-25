@@ -14,8 +14,11 @@ donde $\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$ es el criterio de diseño y 
 
 ```r
 
-optimal_design <- function(k, s0, model, krigingType = "simple", 
-                           form = NULL, grid = NULL, map = NULL, plt = T)
+optimal_design <- function(k, s0, vgm_model = NULL,cov_model = NULL, 
+                           krigingType = "simple",range = NULL,
+                           psill = NULL, nugget = 0,
+                           krig_formula = NULL,grid = NULL,map = NULL,
+                           plt = T,...){
 
 ```
 ---
