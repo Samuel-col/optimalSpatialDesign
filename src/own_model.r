@@ -37,6 +37,7 @@ own_model.fn <- function(cov_model,
   
   # Nuestros datos (esto ya est'a en la funci'on principal)
   z <- rep(1, nrow(points))
+  colnames(points) <- c("x","y")
   datos <- SpatialPointsDataFrame(coords = points,
                                   data = as.data.frame(z))
   #proj4string(datos) <- CRS
