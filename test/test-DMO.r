@@ -77,9 +77,6 @@ my_range = 20000
 my_psill = 5
 my_nugget = 1
 
-# Fórmula para el kriging universal
-my_formula = formula("z ~ x + y")
-
 
 optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
                krigingType = "simple",map = mapa,
@@ -100,16 +97,14 @@ res5
 optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
                krigingType = "ordinary",map = mapa,
                range = my_range, psill = my_psill,
-               nugget = my_nugget,krig_formula = my_formula) -> res6
+               nugget = my_nugget,krig_formula = "x + y") -> res6
 
 res6
 
 
-my_formula = formula("z ~ x + sqrt(y)")
-
 optimal_design(k = 10, s0 = as.data.frame(target), cov_model = my_cov_model,
                krigingType = "ordinary",map = mapa,
                range = my_range, psill = my_psill,
-               nugget = my_nugget,krig_formula = my_formula) -> res7
+               nugget = my_nugget,krig_formula = "x + sqrt(y)") -> res7
 
 res7
