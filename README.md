@@ -25,7 +25,7 @@ optimal_design <- function(k, s0, vgm_model = NULL,cov_model = NULL,
 
 ## Dependencias
 
-* [`gstat`](https://github.com/r-spatial/gstat)
+* [`gstat`](https://github.com/r-spatial/gstat) (Sólo si se van a usar sus modelos de semivariograma).
 * [`ggplot2`](https://github.com/tidyverse/ggplot2)
 * [`sf`](https://github.com/r-spatial/sf)
 * [`sp`](https://github.com/edzer/sp)
