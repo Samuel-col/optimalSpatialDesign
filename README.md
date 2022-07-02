@@ -8,8 +8,32 @@ $$S_{n}^{*}=\arg \max_{S_{n} \in \Xi_{n}} \Phi\left(\boldsymbol{\Theta}, S_{n}\r
 
 donde $\Phi\left(\boldsymbol{\Theta}, S_{n}\right)$ es el criterio de diseño y constituye cualquier medida escalar de información obtenida a partir de la configuración $S_{n}$ y que depende del vector de parámetros. Así, si se conoce el variograma de la variable de interés, entonces es posible optimizar el esquema de muestreo de modo que se minimice una función objetivo relacionada con el error de la predicción. En particular, la varianza del error de las predicciones en $m$ lugares no observados $S_{0}=\{s_{0}^{1}, ..., s_{0}^{m}\}$ puede ser minimizada. 
 
-*aquí mencionamos la varianza de la predicción según el tipo de kriging 
-*también hablamos del método de optimización
+## Kriging
+
+El kriging espacial univariado puede ser de tres tipos: simple, ordinario y universal. Cada uno estima de forma distinta los coeficientes $\lambda$ que determinan la combinación lineal con la cual se va a predecir en un punto $s_0$ a partir de los puntos observados y, por lo tanto, cada uno tiene una expresión distinta para la varianza de su predicción.
+
+Actualmente, esta función soporta kriging simple en términos de la covarianza, y kriging ordinario y universal en términos tanto de la covarianza como de la semivarianza. Se utilizan las siguientes fórmulas para la varianza de la predicción Cressie (1993):
+
+En términos de la covarianza:
+
+$$\sigma^2(s_0) = C(0) -2\lambda'c + \lambda'\Sigma\lambda$$
+
+En términos de la semivarianza:
+
+$$\sigma^2(s_0) = 2\lambda'\gamma - \lambda'\Gamma\lambda$$
+
+donde:
+
+* $\sigma^2(s_0)$ es la varianza de predicción en el punto $s_0$.
+* $C(\cdot)$ es el modelo de covarianza.
+* $c$ es el vector de las covarianzas espaciales entre los puntos observados y $s_0$.
+* $\Sigma$ es la matriz de covarianzas espaciales entre los puntos observados.
+* $\gamma$ es el vector de semivarianzas espaciales entre los puntos observados y $s_0$.
+* $\Gamma$ es la matriz de semivarianzas espaciales entre los puntos observados.
+
+Se busca entonces posicionar $k$ estaciones de tal manera que se minimice la varianza de predicción en los puntos pasados al argumento $s_0$. La minimización se hace con la función `optim` y el método `L-BFGS-B` con un máximo de 85 iteraciones que casi siempre resulta ser más que suficiente.
+
+
 ---
 
 ```r
